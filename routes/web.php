@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\ArticleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +20,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+
+Route::get('/all-articles', [ArticleController::class, 'allArticles'])->name('getAllArticles');
+Route::get('/create-articles', [ArticleController::class, 'createArticles'])->name('getCreateArticles');
+Route::post('/store-articles', [ArticleController::class, 'storeArticles'])->name('getStoreArticles');
