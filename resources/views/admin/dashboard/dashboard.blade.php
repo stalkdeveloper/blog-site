@@ -1,6 +1,8 @@
 @extends('admin.include.main')
 @section('title', 'Dashboard')
 @section('content')
+
+
 @if(Auth::user()->usertype == 'admin')
     <div class="pcoded-content">
         <!-- [ breadcrumb ] start -->
