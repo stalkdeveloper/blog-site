@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +35,19 @@ class RoleSeeder extends Seeder
             'created_at'           =>now(),
             'updated_at'          =>now(),
             'password'=>Hash::make('User@1234') // <---- check this
+        ]);
+
+        /* For role table */
+        DB::table('roles')->insert([
+            'admin_user_id' =>'1',
+            'user_id'       =>'1',
+            'can_create'    =>'1',
+            'can_read'      =>'1',
+            'can_update'    =>'1',
+            'can_delete'    =>'1',
+            'module'        =>'',
+            'created_at'    =>now(),
+            'updated_at'    =>now(),
         ]);
     }
 }

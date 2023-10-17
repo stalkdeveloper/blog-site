@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Article;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.dashboard');
+        $user = User::count();
+        $article = Article::count();
+        // $category = Category::count();
+        $category = Category::orderBy('id', 'desc')->paginate(10, ['*'], 'categorries');
+        return view('admin.dashboard.dashboard', compact('user', 'article', 'category'));
     }
 }
