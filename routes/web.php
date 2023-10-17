@@ -17,28 +17,22 @@ use App\Http\Controllers\Admin\RoleController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    toastr()->warning('Access Denied, Please Login');
+    // return view('auth.login');
+    return redirect('/login');
 });
 
+// Auth::routes();
+
+// Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+
 Auth::routes();
 
-Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
-
-// Route::get('/all-articles', [ArticleController::class, 'allArticles'])->name('getAllArticles');
-// Route::get('/create-articles', [ArticleController::class, 'createArticles'])->name('getCreateArticles');
-// Route::post('/store-articles', [ArticleController::class, 'storeArticles'])->name('getStoreArticles');
-// Route::get('/view-articles/{id}', [ArticleController::class, 'viewArticles'])->name('getViewArticles');
-// Route::get('/edit-articles/{id}', [ArticleController::class, 'viewArticles'])->name('getEditArticles');
-// Route::post('/update-articles', [ArticleController::class, 'updateArticles'])->name('getUpdateArticles');
-// Route::get('/delete-articles/{id}', [ArticleController::class, 'deleteArticles'])->name('getDeleteArticles');
+// Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
     Route::get('/all-articles', [ArticleController::class, 'allArticles'])->name('getAllArticles');
     Route::get('/create-articles', [ArticleController::class, 'createArticles'])->name('getCreateArticles');

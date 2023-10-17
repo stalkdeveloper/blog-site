@@ -133,7 +133,7 @@ class CategoryController extends Controller
 
                 if($delete){
                     toastr()->success('Successfully,  Category deleted!');
-                    return redirect('/all-articles');
+                    return redirect('/all-categories');
                 }else{
                     toastr()->error('Sorry, unable to delete!');
                     return back();

@@ -12,8 +12,8 @@
                     </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="">Article</a></li>
-                        <li class="breadcrumb-item"><a href="#!">Create A Article</a></li>
+                        <li class="breadcrumb-item"><a href="#">Article</a></li>
+                        <li class="breadcrumb-item"><a href="#">Create An Article</a></li>
                     </ul>
                 </div>
             </div>
@@ -25,7 +25,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Create a Article</h5>
+                    <h5>Create an Article</h5>
                 </div>
                 <div class="card-body">
                     <form action="{{route('getStoreArticles')}}" method="POST" enctype="multipart/form-data">
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
-                                    <label class="floating-label" for="content">content</label>
+                                    <label class="floating-label" for="content">Content</label>
                                     <textarea class="form-control ckeditor" id="description" name="description" placeholder="Enter Description" rows="3" required>{{old('description')}}    </textarea>
                                 </div>
                             </div>

@@ -39,29 +39,29 @@
                 <li class="nav-item">
                     <a href="{{ url('/dashboard') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
-                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Article Management</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="{{route('getAllArticles')}}">Article</a></li>
-                        </ul>
-                    </li>
-                @endif
-                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Categories</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="{{route('getAllCategory')}}">Category</a></li>
-                        </ul>
-                    </li>
-                @endif
-                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
-                    <li class="nav-item pcoded-hasmenu">
-                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User Roles</span></a>
-                        <ul class="pcoded-submenu">
-                            <li><a href="{{route('getAllUserRole')}}">Roles</a></li>
-                        </ul>
-                    </li>
+                @if(isset($data))
+                    @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                        <li class="nav-item pcoded-hasmenu">
+                            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Article Management</span></a>
+                            <ul class="pcoded-submenu">
+                                <li><a href="{{route('getAllArticles')}}">Article</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item pcoded-hasmenu">
+                            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Categories</span></a>
+                            <ul class="pcoded-submenu">
+                                <li><a href="{{route('getAllCategory')}}">Category</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item pcoded-hasmenu">
+                            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User Roles</span></a>
+                            <ul class="pcoded-submenu">
+                                <li><a href="{{route('getAllUserRole')}}">Roles</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                @else
+                    
                 @endif
             </ul>    
         </div>
