@@ -49,6 +49,13 @@ class ArticleService extends Service
             $data->title = $request['title'];
             $data->content = $request['description'];
 
+            // if ($request['image']) {
+            //     $image = $request['image'];
+            //     $imageName = time() . '.' . $image->getClientOriginalExtension();
+            //     $image->move(public_path('images'), $imageName);
+            //     $data->image = $imageName;
+            // }
+
             if ($request['image']) {
                 $image = $request['image'];
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
