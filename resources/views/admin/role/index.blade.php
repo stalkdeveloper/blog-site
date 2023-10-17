@@ -2,6 +2,9 @@
 @extends('admin.include.main')
 @section('title', 'All Role User')
 @section('content')
+<?php 
+    $data = userInfo();                    
+?>
 <div class="pcoded-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
@@ -29,7 +32,9 @@
                 <div class="card-header">
                     <h5>Role</h5>
                     <span class="d-block m-t-5">Here, your user <code>role</code> will be available</span>
-                    <a href="{{route('getCreateUserRole')}}" class="btn  btn-outline-primary float-right">Create User Role</a>
+                    @if($data->can_create == '1' || Auth::user()->usertype == 'admin')
+                        <a href="{{route('getCreateUserRole')}}" class="btn  btn-outline-primary float-right">Create User Role</a>
+                    @endif
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -73,9 +78,12 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('getViewUserRole', $item->id)}}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Edit</a>
-                                                        <a href="{{route('getDeleteUserRole', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
-
+                                                        @if($data->can_update == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getViewUserRole', $item->id)}}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Edit</a>
+                                                        @endif
+                                                        @if($data->can_delete == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getDeleteUserRole', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @empty

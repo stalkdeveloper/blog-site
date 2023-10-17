@@ -2,6 +2,9 @@
 @extends('admin.include.main')
 @section('title', 'All Category')
 @section('content')
+<?php 
+    $data = userInfo();                    
+?>
 <div class="pcoded-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
@@ -29,7 +32,9 @@
                 <div class="card-header">
                     <h5>Category</h5>
                     <span class="d-block m-t-5">Here, your articles <code>Category</code> will be available</span>
-                    <a href="{{route('getCreateCategory')}}" class="btn  btn-outline-primary float-right">Create Category</a>
+                    @if($data->can_create == '1' || Auth::user()->usertype == 'admin')
+                        <a href="{{route('getCreateCategory')}}" class="btn  btn-outline-primary float-right">Create Category</a>
+                    @endif
                 </div>
                 <div class="card-body table-border-style">
                     <div class="table-responsive">
@@ -56,8 +61,15 @@
                                                         {{$item->users->name ?? 'N/A'}}
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('getViewCategory', $item->id)}}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Edit</a>
-                                                        <a href="{{route('getDeleteCategory', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+                                                        @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getViewCategoryDetails', $item->id)}}" class="btn btn-primary btn-sm" role="button" aria-pressed="true">View</a>
+                                                        @endif
+                                                        @if($data->can_update == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getViewCategory', $item->id)}}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Edit</a>
+                                                        @endif
+                                                        @if($data->can_delete == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getDeleteCategory', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @empty

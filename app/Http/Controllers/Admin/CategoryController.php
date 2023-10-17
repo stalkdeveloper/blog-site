@@ -19,8 +19,13 @@ class CategoryController extends Controller
 
     public function allCategory(Request $request){
         try {
-            $category = $this->CategoryService->categoryAll();
-            return view('admin.blog.category.index')->with(compact('category'));
+            $data = userInfo(); 
+            if($data->can_read == '1' || \Auth::user()->usertype == 'admin'){
+                $category = $this->CategoryService->categoryAll();
+                return view('admin.blog.category.index')->with(compact('category'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -28,7 +33,12 @@ class CategoryController extends Controller
 
     public function createCategory(Request $request){
         try {
-            return view('admin.blog.category.create');
+            $data = userInfo(); 
+            if($data->can_create == '1' || \Auth::user()->usertype == 'admin'){
+                return view('admin.blog.category.create');
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -60,10 +70,29 @@ class CategoryController extends Controller
         }
     }
 
+    public function viewCategoryDetails($id){
+        try {
+            $data = userInfo(); 
+            if($data->can_read == '1' || \Auth::user()->usertype == 'admin'){
+                $data = $this->CategoryService->categoryView($id);
+                return view('admin.blog.category.show')->with(compact('data'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     public function viewCategory($id){
         try {
-            $data = $this->CategoryService->categoryView($id);
-            return view('admin.blog.category.edit')->with(compact('data'));
+            $data = userInfo(); 
+            if($data->can_update == '1' || \Auth::user()->usertype == 'admin'){
+                $data = $this->CategoryService->categoryView($id);
+                return view('admin.blog.category.edit')->with(compact('data'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -97,15 +126,20 @@ class CategoryController extends Controller
     }
 
     public function deleteCategory($id){
-        try {            
-            $delete = $this->CategoryService->categoryDelete($id);
+        try {
+            $data = userInfo(); 
+            if($data->can_delete == '1' || \Auth::user()->usertype == 'admin'){            
+                $delete = $this->CategoryService->categoryDelete($id);
 
-            if($delete){
-                toastr()->success('Successfully,  Category deleted!');
-                return redirect('/all-articles');
+                if($delete){
+                    toastr()->success('Successfully,  Category deleted!');
+                    return redirect('/all-articles');
+                }else{
+                    toastr()->error('Sorry, unable to delete!');
+                    return back();
+                }
             }else{
-                toastr()->error('Sorry, unable to delete!');
-                return back();
+                return view('admin.error.permission-denied');
             }
         } catch (\Throwable $th) {
             //throw $th;

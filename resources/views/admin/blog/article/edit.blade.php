@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <label class="floating-label" for="image">Image</label>
+                                <label class="floating-label" for="image">Choose image file</label>
                                 <div class="input-group cust-file-button mb-3">
                                     @if(!empty($data->image))
                                         <img src="{{ asset('storage/' . $data->image) }}" alt="Uploaded Image" style="width:100px; height:45px;">
@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" name="image" value="" id="inputGroupFile03" accept="image/*">
-                                        <label class="custom-file-label" for="inputGroupFile03">Choose image file</label>
+                                        <label class="custom-file-label" for="inputGroupFile03">image</label>
                                     </div>
                                 </div>                                
                             </div>

@@ -1,3 +1,6 @@
+<?php 
+    $data = userInfo();                    
+?>
 <nav class="pcoded-navbar  ">
     <div class="navbar-wrapper  ">
         <div class="navbar-content scroll-div " >
@@ -12,8 +15,6 @@
                 </div>
                 <div class="collapse" id="nav-user-link">
                     <ul class="list-unstyled">
-                        <li class="list-group-item"><a href="user-profile.html"><i class="feather icon-user m-r-5"></i>View Profile</a></li>
-                        <li class="list-group-item"><a href="#!"><i class="feather icon-settings m-r-5"></i>Settings</a></li>
                         <li class="list-group-item"><a href="{{ route('logout') }}" onclick="return logout(event);"><i class="feather icon-log-out m-r-5"></i>Logout</a></li>
                     </ul>
                 </div>
@@ -38,29 +39,30 @@
                 <li class="nav-item">
                     <a href="{{ url('/dashboard') }}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Article Management</span></a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('getAllArticles')}}" target="">Article</a></li>
-                        <li><a href="{{route('getAllCategory')}}" target="">Category</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="#!" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Categories</span></a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="layout-vertical.html" target="">All Categories</a></li>
-                        <li><a href="layout-horizontal.html" target="">Horizontal</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>User Roles</label>
-                </li>
-                <li class="nav-item pcoded-hasmenu">
-                    <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User</span></a>
-                    <ul class="pcoded-submenu">
-                        <li><a href="{{route('getAllUserRole')}}">Roles</a></li>
-                    </ul>
-                </li>
+                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Article Management</span></a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="{{route('getAllArticles')}}">Article</a></li>
+                        </ul>
+                    </li>
+                @endif
+                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Categories</span></a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="{{route('getAllCategory')}}">Category</a></li>
+                        </ul>
+                    </li>
+                @endif
+                @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                    <li class="nav-item pcoded-hasmenu">
+                        <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">User Roles</span></a>
+                        <ul class="pcoded-submenu">
+                            <li><a href="{{route('getAllUserRole')}}">Roles</a></li>
+                        </ul>
+                    </li>
+                @endif
             </ul>    
         </div>
     </div>

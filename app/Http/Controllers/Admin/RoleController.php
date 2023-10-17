@@ -20,8 +20,13 @@ class RoleController extends Controller
 
     public function allUserRole(Request $request){
         try {
-            $roles = $this->RoleService->userRoleUAll();
-            return view('admin.role.index')->with(compact('roles'));
+            $data = userInfo(); 
+            if($data->can_read == '1' || \Auth::user()->usertype == 'admin'){
+                $roles = $this->RoleService->userRoleUAll();
+                return view('admin.role.index')->with(compact('roles'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -29,9 +34,13 @@ class RoleController extends Controller
 
     public function createUserRole(Request $request){
         try {
-            $user = User::orderBy('id', 'desc')->get();
-
-            return view('admin.role.create', compact('user'));
+            $data = userInfo(); 
+            if($data->can_create == '1' || \Auth::user()->usertype == 'admin'){
+                $user = User::orderBy('id', 'desc')->get();
+                return view('admin.role.create', compact('user'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -51,7 +60,7 @@ class RoleController extends Controller
                 return back()->withErrors($roleValidator->getValidator())->withInput();
             }
 
-            $data = $this->RoleService->userRoleView($input['user']);
+            $data = $this->RoleService->userRoleData($input['user']);
             if($data){
                 toastr()->error('Sorry, this user already created their role!!');
                 return back();
@@ -73,8 +82,13 @@ class RoleController extends Controller
 
     public function viewUserRole($id){
         try {
-            $data = $this->RoleService->userRoleView($id);
-            return view('admin.role.edit', compact('data'));
+            $data = userInfo(); 
+            if($data->can_update == '1' || \Auth::user()->usertype == 'admin'){
+                $data = $this->RoleService->userRoleView($id);
+                return view('admin.role.edit', compact('data'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -111,13 +125,19 @@ class RoleController extends Controller
 
     public function deleteUserRole($id){
         try {
-            $delete = $this->RoleService->userRoleDelete($id);
-            if($delete){
-                toastr()->success('Successfully,  Role User deleted!');
-                return redirect('/all-user-role');
+            $data = userInfo(); 
+            if($data->can_delete == '1' || \Auth::user()->usertype == 'admin'){
+
+                $delete = $this->RoleService->userRoleDelete($id);
+                if($delete){
+                    toastr()->success('Successfully,  Role User deleted!');
+                    return redirect('/all-user-role');
+                }else{
+                    toastr()->error('Sorry, unable to delete!');
+                    return back();
+                }
             }else{
-                toastr()->error('Sorry, unable to delete!');
-                return back();
+                return view('admin.error.permission-denied');
             }
         } catch (\Throwable $th) {
             //throw $th;

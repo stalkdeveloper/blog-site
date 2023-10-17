@@ -50,6 +50,15 @@ class RoleService extends Service
         }
     }
 
+    public function userRoleData($id){
+        try {
+            $data = Role::where('user_id', $id)->first();
+            return $data;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     public function userRoleUpdate($request){
         try {
             $data = [

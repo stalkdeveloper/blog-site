@@ -5,6 +5,7 @@ namespace App\Services\Admin;
 use App\Services\Service;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
+use App\Models\Article;
 use Auth;
 
 class CategoryService extends Service
@@ -46,8 +47,8 @@ class CategoryService extends Service
 
     public function categoryView($id){
         try {
-            $data = Category::where('id', $id)->first();
-            return $data;
+            $category = Category::with('articles')->where('id', $id)->first();
+            return $category;
         } catch (\Throwable $th) {
             //throw $th;
         }

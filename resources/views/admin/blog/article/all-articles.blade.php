@@ -2,6 +2,9 @@
 @extends('admin.include.main')
 @section('title', 'All Articles')
 @section('content')
+<?php 
+    $data = userInfo();                    
+?>
 <div class="pcoded-content">
     <!-- [ breadcrumb ] start -->
     <div class="page-header">
@@ -29,7 +32,9 @@
                 <div class="card-header">
                     <h5>Articles</h5>
                     <span class="d-block m-t-5">Here, your <code>articles</code> will be available</span>
-                    <a href="{{route('getCreateArticles')}}" class="btn  btn-outline-primary float-right">Create Article</a>
+                    @if($data->can_create == '1' || Auth::user()->usertype == 'admin')
+                        <a href="{{route('getCreateArticles')}}" class="btn  btn-outline-primary float-right">Create Article</a>
+                    @endif
                 </div>
                 <div class="card-body table-border-style">
                     <form action="" id="" method="get">
@@ -86,10 +91,15 @@
                                                         {{$item->users->name ?? 'N/A'}}
                                                     </td>
                                                     <td>
-                                                        <a href="{{route('getViewArticles', $item->id)}}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">View</a>
-                                                        <a href="{{route('getEditArticles', $item->id)}}" class="btn btn-success btn-sm" role="button" aria-pressed="true">Edit</a>
-                                                        <a href="{{route('getDeleteArticles', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
-
+                                                        @if($data->can_read == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getViewArticles', $item->id)}}" class="btn btn-secondary btn-sm" role="button" aria-pressed="true">View</a>
+                                                        @endif
+                                                        @if($data->can_update == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getEditArticles', $item->id)}}" class="btn btn-success btn-sm" role="button" aria- pressed="true">Edit</a>
+                                                        @endif
+                                                        @if($data->can_delete == '1' || Auth::user()->usertype == 'admin')
+                                                            <a href="{{route('getDeleteArticles', $item->id)}}" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @empty

@@ -24,12 +24,17 @@ class ArticleController extends Controller
 
     public function allArticles(Request $request){
         try {
-            $search = $request->search ?? '';
+            $data = userInfo(); 
+            if($data->can_read == '1' || \Auth::user()->usertype == 'admin'){
+                $search = $request->search ?? '';
 
-            $articles = $this->ArticleService->getArticles($request);
-            $category = $this->CategoryService->category();
+                $articles = $this->ArticleService->getArticles($request);
+                $category = $this->CategoryService->category();
 
-            return view('admin.blog.article.all-articles')->with(compact('articles', 'category', 'search'));
+                return view('admin.blog.article.all-articles')->with(compact('articles', 'category', 'search'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Throwable $th) {
             //throw $th;
         }
@@ -37,9 +42,13 @@ class ArticleController extends Controller
 
     public function createArticles(Request $request){
         try {
-            $category = $this->CategoryService->category();
-
-            return view('admin.blog.article.create')->with(compact('category'));
+            $data = userInfo(); 
+            if($data->can_create == '1' || \Auth::user()->usertype == 'admin'){
+                $category = $this->CategoryService->category();
+                return view('admin.blog.article.create')->with(compact('category'));
+            }else{
+                return view('admin.error.permission-denied');
+            }
         } catch (\Exception $e) {
             \Log::error($e->getMessage()." ".$e->getFile()." ".$e->getLine());
         }
@@ -73,6 +82,7 @@ class ArticleController extends Controller
 
     public function viewArticles($id){
         try {
+            $data = userInfo(); 
             $currenturl = url()->full();
             $parts = parse_url($currenturl);
 
@@ -91,12 +101,20 @@ class ArticleController extends Controller
             }
 
             if($editArticlesUrl == 'edit-articles'){
-                $data = $this->ArticleService->articlesView($id);
-                $category = $this->CategoryService->category();
-                return view('admin.blog.article.edit')->with(compact('data', 'category'));
+                if($data->can_update == '1' || \Auth::user()->usertype == 'admin'){
+                    $data = $this->ArticleService->articlesView($id);
+                    $category = $this->CategoryService->category();
+                    return view('admin.blog.article.edit')->with(compact('data', 'category'));
+                }else{
+                    return view('admin.error.permission-denied');
+                }
             }else if($editArticlesUrl == 'view-articles'){
-                $data = $this->ArticleService->articlesView($id);
-                return view('admin.blog.article.show')->with(compact('data'));
+                if($data->can_read == '1' || \Auth::user()->usertype == 'admin'){
+                    $data = $this->ArticleService->articlesView($id);
+                    return view('admin.blog.article.show')->with(compact('data'));
+                }else{
+                    return view('admin.error.permission-denied');
+                }
             }else{
                 toastr()->warning('Sorry,  Invalid Data Found!');
                 return back();
@@ -134,13 +152,18 @@ class ArticleController extends Controller
 
     public function deleteArticles($id){
         try {
-            $delete = $this->ArticleService->articlesDelete($id);
-            if($delete){
-                toastr()->success('Successfully,  Article deleted!');
-                return redirect('/all-articles');
+            $data = userInfo(); 
+            if($data->can_delete == '1' || \Auth::user()->usertype == 'admin'){
+                $delete = $this->ArticleService->articlesDelete($id);
+                if($delete){
+                    toastr()->success('Successfully,  Article deleted!');
+                    return redirect('/all-articles');
+                }else{
+                    toastr()->error('Sorry, unable to delete!');
+                    return back();
+                }
             }else{
-                toastr()->error('Sorry, unable to delete!');
-                return back();
+                return view('admin.error.permission-denied');
             }
         } catch (\Throwable $th) {
             //throw $th;

@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/all-categories', [CategoryController::class, 'allCategory'])->name('getAllCategory');
     Route::get('/create-categories', [CategoryController::class, 'createCategory'])->name('getCreateCategory');
     Route::post('/create-categories', [CategoryController::class, 'storeCategory'])->name('getStoreCategory');
+    Route::get('/view-categories/{id}', [CategoryController::class, 'viewCategoryDetails'])->name('getViewCategoryDetails');
     Route::get('/edit-categories/{id}', [CategoryController::class, 'viewCategory'])->name('getViewCategory');
     Route::post('/update-categories', [CategoryController::class, 'updateCategory'])->name('getUpdateCategory');
     Route::get('/delete-categories/{id}', [CategoryController::class, 'deleteCategory'])->name('getDeleteCategory');
