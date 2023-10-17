@@ -32,13 +32,24 @@
                     <form action="{{route('getStoreArticles')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label class="floating-label" for="Title">Title</label>
-                                    <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}" placeholder="Write a title">
+                                    <label class="floating-label" for="category">Category</label>
+                                    <select class="form-control" id="category" name="category" value="{{old('category')}}" placeholder="Select a category">
+                                        <option value="">Select a category</option>
+                                        @foreach ($category as $item)    
+                                            <option value="{{$item->id}}">{{$item->title}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="floating-label" for="Title">Title</label>
+                                    <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}" placeholder="Enter a title">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
                                 <label class="floating-label" for="image">Image</label>
                                 <div class="input-group cust-file-button mb-3">
                                     <div class="input-group-prepend">
