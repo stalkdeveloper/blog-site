@@ -49,11 +49,15 @@
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{$article->title}}</h5>
+                                        <h5 class="card-title">{{$article->title ?? ''}}</h5>
                                         <img class="img-fluid card-img-top" src="{{ asset('storage/' . $article->image) }}" alt="Uploaded Image">
                                     </div>
                                     <div class="card-text ml-2">
-                                        {!! $article->content !!}
+                                        @if(isset($article->content))
+                                            {!! $article->content !!}
+                                        @else
+                                            N/A
+                                        @endif
                                     </div>
                                 </div>
                             </div>

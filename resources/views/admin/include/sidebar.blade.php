@@ -48,7 +48,7 @@
                             </ul>
                         </li>
                         <li class="nav-item pcoded-hasmenu">
-                            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Categories</span></a>
+                            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="feather icon-layout"></i></span><span class="pcoded-mtext">Category Management</span></a>
                             <ul class="pcoded-submenu">
                                 <li><a href="{{route('getAllCategory')}}">Category</a></li>
                             </ul>

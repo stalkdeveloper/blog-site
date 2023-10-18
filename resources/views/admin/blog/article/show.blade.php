@@ -37,7 +37,7 @@
                                     <div class="card mb-3">
                                         <img class="img-fluid card-img-top" src="{{ asset('storage/' . $data->image) }}" alt="Uploaded Image">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{$data->categories->title}}</h5>
+                                            <h5 class="card-title">{{$data->categories->title ?? 'N/A'}}</h5>
                                             <div class="card-text">{!! $data->content !!}</div>
                                         </div>
                                     </div>

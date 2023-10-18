@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label class="floating-label" for="category">Category</label>
                                     <select class="form-control" id="category" name="category" value="{{old('category')}}" placeholder="Select a category">
-                                        <option value="{{$data->category_id}}">{{$data->categories->title}}</option>
+                                        <option value="{{$data->category_id}}">{{$data->categories->title ?? ''}}</option>
                                         @foreach ($category as $item)
                                             @if($item->id != $data->category_id)
                                                 <option value="{{$item->id}}">{{$item->title}}</option>
